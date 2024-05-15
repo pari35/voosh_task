@@ -159,22 +159,22 @@ exports.updatePassword = catchAsyncError(async (req, res, next) => {
 
 // update user profile
 exports.updateProfile = catchAsyncError(async (req, res, next) => {
-    console.log("testtt", req.user);
-    // process.exit(0)
     const newUserData = {
         name: req.body.name,
         email: req.body.email,
         isPrivate :req.body.isPrivate,
         bio : req.body.bio
     }
-    if (req.body.avatar !== "") {
+    console.log("wwww",req.body.avatar)
+    if (req.body.avatar != undefined) {
+        console.log("ddd")
         const user = await User.findById(req.user.id);
 
         const imageId = user.avatar.public_id;
 
         await cloudinary.v2.uploader.destroy(imageId);
 
-        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        const myCloud = await cloudinary.v2.uploader.upload(req.files.avatar.tempFilePath, {
           folder: "avatars",
           width: 150,
           crop: "scale",

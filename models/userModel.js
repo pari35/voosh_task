@@ -43,6 +43,7 @@ const userSchema = new mongoose.Schema({
     },
     isPrivate: {
         type: Number,
+        required: [true, "Please set privacy of profile 0 or 1"],
     },
     bio: {
         type: String,
