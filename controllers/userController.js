@@ -50,8 +50,8 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
     if (!isPasswordMatched) {
         return next(new ErrorHandler("Invalid email or password"), 401)
     }
+    user.password = undefined
     const token = user.getJWTToken();
-    console.log("dddd",sendToken(user, 200, res))
      sendToken(user, 200, res)
 })
 
@@ -165,9 +165,8 @@ exports.updateProfile = catchAsyncError(async (req, res, next) => {
         isPrivate :req.body.isPrivate,
         bio : req.body.bio
     }
-    console.log("wwww",req.body.avatar)
+
     if (req.body.avatar != undefined) {
-        console.log("ddd")
         const user = await User.findById(req.user.id);
 
         const imageId = user.avatar.public_id;
